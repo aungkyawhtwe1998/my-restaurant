@@ -1,103 +1,40 @@
 <template>
-  <div >
-    <div class="container">
-      <div class="row my-3">
-        <h1>Home</h1>
-          <div class="col-md-4">
-            <input type="text" class="form-control" v-model="name" placeholder="Name" aria-label="Enter your name" autocomplete="off">
-
-          </div>
-          <div class="col-md-4">
-            <input type="number" class="form-control" v-model="phone" placeholder="Phone" aria-label="Enter your phone number" autocomplete="off">
-          </div>
-        <div class="col-md-1 mt-2">
-          <button class="btn btn-primary" v-on:click="saveData">Save</button>
+    <div class="">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-12 col-md-6">
+                   <div class="justify-content-center align-items-center">
+                       <h1>Welcome to My Restaurant</h1>
+                       <div class="d-lg-none d-block">
+                           <router-link class="btn btn-dark mx-3"  :to="{name:'Login'}">Login</router-link>
+                           <router-link class="btn btn-secondary" :to="{name:'About'}">View our menu</router-link>
+                       </div>
+                   </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <img src="https://pixy.org/src/455/thumbs350/4553764.jpg" class="w-75" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row my-3 justify-content-center align-items-center">
+                <h1 class="my-2">Explore and Order</h1>
+                <MenuCard :menu="menu" v-for="(menu, index) in menuItems" :key="index"/>
+                <router-link class="nav-link mt-3" :to="{name:'About'}"> <h3>Explore More >></h3> </router-link>
+            </div>
         </div>
 
-      </div>
-      <div class="row my-3">
-        <div class="col-md-12">
-          <table class="table border border-1 ">
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="(contact, index) in contacts" :key="index">
-              <td>{{contact.name}}</td>
-              <td>{{contact.phone}}</td>
-              <td>
-                <button class="btn btn-danger" type="button" v-on:click="deleteData(contact.docid)">Delete</button>
-              </td>
-            </tr>
-            </tbody>
-
-
-
-          </table>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
 <script>
-  import firebase from '../config/firebase'
-  export default {
-    name:'Home',
-    components:{
-
-    },
-    data:()=>({
-      name:'',
-      phone:'',
-      contacts:[]
-    }),
-    mounted() {
-      this.fetchData()
-    },
-    methods:{
-      saveData(){
-        /*console.log(this.name)
-        console.log(this.phone)
-        */
-        //Creating a collection
-        let obj = {
-          name:this.name,
-          phone:this.phone,
-          timestamp:new Date()
+    import MenuCard from "../components/MenuCard";
+    export default {
+        name:'Home',
+        components: {MenuCard},
+        computed:{
+            menuItems(){
+                return this.$store.getters.homeMenuItems;
+            }
         }
-        //firebase query to contacts collection
-        firebase.firestore.collection('contacts').add(obj).then(doc=>{
-          alert('Data add and Doc id ' + doc.id)
-          this.fetchData()
-          this.name=''
-          this.phone = ''
-        }).catch(e=>{
-          console.log(e)
-        })
-      },
-      fetchData(){
-        this.contacts= []
-        firebase.firestore.collection('contacts').get().then(docs =>{
-          docs.forEach(doc =>{
-            this.contacts.push({...doc.data(), ...{docid:doc.id}})
-          })
-        })
-      },
-      deleteData(docid){
-        if(confirm('Are you sure to delete ?')){
-          firebase.firestore.collection('contacts').doc(docid).delete().then(()=>{
-            alert("Doc Removed")
-            this.fetchData()
-          }).catch(e=>{
-            console.log(e)
-          })
-        }
-
-      }
     }
-  }
 </script>

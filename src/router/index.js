@@ -1,8 +1,14 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import About from "../views/About";
+import Home from "../views/Home";
 import Register from "@/views/auth/Register";
 import Login from  "@/views/auth/Login";
+import CreateContact from "../views/CreateContact";
+import ForgotPassword from "../views/auth/ForgotPassword";
+import Profile from "../views/Profile";
+import ShowMenu from "../views/ShowMenu";
+import About from "../views/About";
+import Admin from "../views/Admin";
+
 const routes = [
   {
     path: "/",
@@ -16,6 +22,16 @@ const routes = [
     component: About
   },
   {
+    path: "/show-menu",
+    name:"ShowMenu",
+    component: ShowMenu
+  },
+  {
+    path: "/contact",
+    name: "CreateContact",
+    component: CreateContact
+  },
+  {
     path: "/login",
     name: "Login",
     component: Login
@@ -24,6 +40,21 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register
+  },
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: Admin
   }
 ];
 

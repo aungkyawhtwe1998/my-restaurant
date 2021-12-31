@@ -1,48 +1,53 @@
 <template>
-  <div id="nav">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <router-link class="nav-link" to="/">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/about">About</router-link>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/register">Register</router-link>
-
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-    </nav>
+  <div>
+    <Navigation v-if="!navigation"></Navigation>
+    <router-view/>
+    <Footer v-if="!navigation"></Footer>
   </div>
-  <router-view />
 </template>
 <script>
-
+  import Navigation from "./components/Navigation";
+  import Footer from "./components/Footer";
+  import firebase from "firebase/compat/app";
+  import "firebase/compat/auth";
   export default {
+    name:'app',
+    components:{Footer, Navigation},
+    created(){
+      //updating user state initially by committing updateUser mutation
+      firebase.auth().onAuthStateChanged((user)=>{
+        this.$store.commit("updateUser", user);
+        if(user){
+          this.$store.dispatch("getCurrentUser")
+        }
+      })
+      //checking route whether auth page or not.
+      this.checkRoute();
+      this.$store.dispatch("getMenuItems")
+    },
+    data(){
+      return{
+        navigation:null
+      };
+    },
+
+    methods:{
+      //Checking route whether or not auth pages.
+      checkRoute(){
+        if(this.$route.name === "Login" || this.$route.name === 'Register' || this.$route.name === "ForgotPassword"
+        )
+        {
+          this.navigation=true;
+          return;
+        }
+        this.navigation=false;
+      }
+    },
+    watch:{
+      $route(){
+        this.checkRoute()
+      }
+    }
 
   }
 </script>
@@ -54,4 +59,5 @@
   text-align: center;
   color: #2c3e50;
 }
+
 </style>
