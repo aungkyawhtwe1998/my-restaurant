@@ -43,18 +43,18 @@
         },
         methods:{
             signIn(){
-                firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(()=>{
-                    this.$router.push({name:"Home"});
+                firebase.auth().signInWithEmailAndPassword(this.email,this.password).
+                then(()=>{
+                    this.$router.go(-1);
                     this.error = false;
                     this.errorMsg = "";
                     // console.log(firebase.auth().currentUser.uid);
-                    this.$router.push({name:"Home"})
 
                 }).catch((err)=>{
                     this.error = true;
                     this.errorMsg = err.message;
-                })
-            }
-        }
+                });
+            },
+        },
     }
 </script>

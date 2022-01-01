@@ -1,18 +1,23 @@
 <template>
-  <div>
+  <div class="container-fluid p-0">
     <Navigation v-if="!navigation"></Navigation>
     <router-view/>
-    <Footer v-if="!navigation"></Footer>
+    <Foot v-if="!navigation"></Foot>
   </div>
 </template>
 <script>
   import Navigation from "./components/Navigation";
-  import Footer from "./components/Footer";
   import firebase from "firebase/compat/app";
   import "firebase/compat/auth";
+  import Foot from "./components/Foot";
   export default {
     name:'app',
-    components:{Footer, Navigation},
+    components:{Foot, Navigation},
+    data(){
+      return{
+        navigation:null
+      };
+    },
     created(){
       //updating user state initially by committing updateUser mutation
       firebase.auth().onAuthStateChanged((user)=>{
@@ -25,11 +30,7 @@
       this.checkRoute();
       this.$store.dispatch("getMenuItems")
     },
-    data(){
-      return{
-        navigation:null
-      };
-    },
+
 
     methods:{
       //Checking route whether or not auth pages.
@@ -52,12 +53,9 @@
   }
 </script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,500;0,800;1,500&display=swap');
+*{
+  font-family: 'Karla', sans-serif;
 }
 
 </style>

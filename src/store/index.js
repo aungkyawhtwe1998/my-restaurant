@@ -43,6 +43,7 @@ export default createStore({
     },
     setProfileInfo(state, doc){
       state.profileId = doc.id;
+      console.log("profileId:"+state.profileId)
       state.profileEmail = doc.data().email;
       state.profileName = doc.data().name;
       state.profileAddress = doc.data().address;
@@ -59,34 +60,36 @@ export default createStore({
       const usersDB = await db.collection('users').doc(firebase.auth().currentUser.uid);
       const results = await usersDB.get();
       commit("setProfileInfo", results);
-      console.log(results)
+
     },
     async getMenuItems({state}){
-      const menuDB= db.collection('menu').orderBy('date','desc');
-      const results = await menuDB.get();
-      results.forEach(doc=>{
-        //to restrict adding the same menu twice
-        if(!state.menuItems.some(menu => menu.menuId === doc.id)){
-          const data = {
-            menuId:doc.data().id,
-            menuName:doc.data().name,
-            menuPhoto:doc.data().photo,
-            menuPrice:doc.data().price,
-            menuPhone:doc.data().phone,
-            menuDate: doc.data().date,
-          };
-          state.menuItems.push(data);
-        }
-      });
-      state.menuItemsLoaded=true;
-      console.log(state.menuItems);
+      if(firebase.auth().currentUser){
+        const menuDB= db.collection('menu').where('ownerId', '==', firebase.auth().currentUser.uid);
+        const results = await menuDB.get();
+        results.forEach(doc=>{
+          //to restrict adding the same menu twice
+          if(!state.menuItems.some(menu => menu.menuId === doc.id)){
+            const data = {
+              menuId:doc.id,
+              menuName:doc.data().name,
+              menuPhoto:doc.data().photo,
+              menuPrice:doc.data().price,
+              menuPhone:doc.data().phone,
+              menuDate: doc.data().date,
+            };
+            state.menuItems.push(data);
+          }
+        });
+        state.menuItemsLoaded=true;
+      }
     },
+
 
     async updateProfileSettings({commit, state}){
       const usersDB = await db.collection('users').doc(state.profileId);
       await usersDB.update({
         name: state.profileName,
-        address: state.profileAddress
+        address: state.profileAddress,
       });
       commit("setProfileInfo")
     },

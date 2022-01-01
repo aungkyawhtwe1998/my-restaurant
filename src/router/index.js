@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
 import Register from "@/views/auth/Register";
 import Login from  "@/views/auth/Login";
@@ -22,7 +22,7 @@ const routes = [
     component: About
   },
   {
-    path: "/show-menu",
+    path: "/show-menu:menuId",
     name:"ShowMenu",
     component: ShowMenu
   },
@@ -59,9 +59,8 @@ const routes = [
 ];
 
 const router = createRouter({
-  mode:'history',
-  history: createWebHashHistory(),
+
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-
 export default router;

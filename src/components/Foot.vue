@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-fluid bg-dark ">
+        <div class="container-fluid bg-choco">
             <div class="row ">
                 <div class="container my-2">
                     <div class="row justify-content-center align-items-center">
@@ -22,7 +22,7 @@
                             </ul>
                         </div>
                         <div>
-                            <p class="text-white">Copyright 2021, All right reserved</p>
+                            <p class="text-white text-center">Copyright 2021, All right reserved</p>
                         </div>
 
                     </div>
@@ -34,15 +34,23 @@
 </template>
 <script>
     export default {
-        name:'footer'
+        name:'Foot'
     }
 </script>
 
 <style scoped>
 .nav-link{
     transition: 0.9s;
+    color:#b38370;
+
+}
+
+.bg-choco{
+    background-color:#6b4040;
+
 }
     .nav-link:hover{
+        color: #f3f3f3 !important;
         transform: scale(1.5);
     }
 </style>

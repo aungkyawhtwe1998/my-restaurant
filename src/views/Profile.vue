@@ -60,7 +60,6 @@
             email(){
                 return this.$store.state.profileEmail;
             }
-
         },
 
         methods:{
@@ -71,9 +70,6 @@
             closeModal(){
                 this.modalActive = !this.modalActive;
             },
-
-
-
         }
     }
 </script>

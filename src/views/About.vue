@@ -1,8 +1,7 @@
 <template>
   <div class="container">
-    <div class="row my-3">
-      <h1 class="my-2">Explore and Order</h1>
-
+    <div class="row min-vh-100">
+      <h1 class="mt-5">Explore and Order</h1>
       <MenuCard :menu="menu" v-for="(menu, index) in menuItems" :key="index"/>
     </div>
   </div>

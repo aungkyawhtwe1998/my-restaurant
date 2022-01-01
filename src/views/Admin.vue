@@ -61,7 +61,6 @@
         name:'Admin',
         components:{
             Loading
-
         },
         data(){
             return{
@@ -136,6 +135,7 @@
                     this.menuPrice="";
                     this.menuPhone="";
                     this.loading=false;
+                    window.location.reload();
                     // this.$router.push({name:"Home"});
                     return;
                 }

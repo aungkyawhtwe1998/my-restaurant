@@ -1,7 +1,7 @@
 <template>
-    <div class="container-fluid sticky-top">
+    <div class="container-fluid m-0 p-0 sticky-top">
         <div id="nav">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-choco ">
                 <div class="container">
                     <router-link class="navbar-brand" :to="{name:'Home'}">My Restaurant</router-link>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,11 +20,11 @@
                             </li>
 
                         </ul>
-                        <div class="dropdown" v-if="user">
+                        <div class="dropdown " v-if="user">
                             <button class="btn btn-secondary rounded dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{this.$store.state.profileName}}
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                            <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
                                 <li><router-link class="dropdown-item" :to="{name:'Profile'}"><BIconPersonCircle/> Profile</router-link></li>
                                 <li><router-link class="dropdown-item" :to="{name:'Admin'}"><BIconSliders/> Admin Panel</router-link></li>
                                 <li><div class="dropdown-item" @click="signOut"><BIconBoxArrowRight/> Logout</div></li>
@@ -65,4 +65,22 @@
 
 
 <style scoped>
+    .nav-link{
+        text-align: center;
+        margin: 5px;
+        border-radius: 1rem;
+        border: 3px;
+        font-weight: bolder;
+        transition: 0.5s;
+    }
+
+    .nav-link:hover{
+        border-radius: 1rem;
+        border: 3px solid #6b4040;
+        background-color: #b38370;
+        color: #f3f3f3 !important;
+    }
+    .bg-choco{
+        background-color:#6b4040;
+    }
 </style>
