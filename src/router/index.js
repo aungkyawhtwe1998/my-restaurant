@@ -22,7 +22,7 @@ const routes = [
     component: About
   },
   {
-    path: "/show-menu:menuId",
+    path: "/menu/:menuId",
     name:"ShowMenu",
     component: ShowMenu
   },

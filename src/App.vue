@@ -26,6 +26,7 @@
           this.$store.dispatch("getCurrentUser")
         }
       })
+
       //checking route whether auth page or not.
       this.checkRoute();
       this.$store.dispatch("getMenuItems")

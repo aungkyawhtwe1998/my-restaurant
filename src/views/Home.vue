@@ -2,13 +2,13 @@
     <div class="">
         <div class="container">
             <div class="row mt-5 align-items-center align-items-center d-flex">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-6 text-end">
                     <img src="../assets/homeBg.svg" width="300" alt="">
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-6 text-start">
                     <h1>Welcome to My Restaurant</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi consectetur earum est, illo impedit nulla perspiciatis qui quo quos rem sed ullam vero?</p>
-                    <router-link class="my-btn my-3"  :to="{name:'Login'}"><BIconGear/> Access Owner panel</router-link>
+<!--                    <router-link class="my-btn my-3"  :to="{name:'Login'}"><BIconGear/> Access Owner panel</router-link>-->
                 </div>
 
             </div>
@@ -30,7 +30,7 @@
         components: {MenuCard},
         computed:{
             menuItems(){
-                return this.$store.getters.homeMenuItems;
+                return this.$store.state.menuItems;
             },
             user(){
                 return this.$store.state.user;

@@ -41,9 +41,11 @@ export default createStore({
     updateUser(state, payload){
         state.user = payload
     },
+    filterMenuItems(state, payload) {
+      state.menuItems = state.menuItems.filter((menu) => menu.menuId !== payload);
+    },
     setProfileInfo(state, doc){
       state.profileId = doc.id;
-      console.log("profileId:"+state.profileId)
       state.profileEmail = doc.data().email;
       state.profileName = doc.data().name;
       state.profileAddress = doc.data().address;
@@ -92,6 +94,12 @@ export default createStore({
         address: state.profileAddress,
       });
       commit("setProfileInfo")
+    },
+
+    async deleteMenu({ commit }, payload) {
+      const getMenu = await db.collection("menu").doc(payload);
+      await getMenu.delete();
+      commit("filterMenuItems", payload);
     },
 
   },

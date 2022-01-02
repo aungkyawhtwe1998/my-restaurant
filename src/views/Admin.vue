@@ -3,7 +3,8 @@
         <Loading v-show="loading"/>
         <div class="container min-vh-100">
             <div class="row my-3">
-                <div class="col-12 col-md-6 col-lg-6 mx-auto">
+                <h1>Admin Panel</h1>
+                <div class="col-12 col-md-4 col-lg- ">
                     <div class="card">
                         <div class="card-header">Create new menu</div>
                         <div class="card-body text-start">
@@ -23,9 +24,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row my-3">
-                <div class="col-md-12">
+                <div class="col-12 col-md-8 col-lg-8">
                     <table class="table border border-1 ">
                         <thead>
                         <tr>
@@ -37,18 +36,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="menu in getMenu" :key="menu.menuId">
-                                <td>{{menu.menuName}}</td>
-                                <td>{{menu.menuPrice}}</td>
-                                <td><img :src="menu.menuPhoto" width="100" alt=""></td>
-                                <td>{{menu.menuPhone}}</td>
-                                <td>
-                                    <button class="btn btn-danger"><BIconTrash/></button>
-                                </td>
-                            </tr>
+                        <tr v-for="menu in getMenu" :key="menu.menuId">
+
+                            <td>{{menu.menuName}}</td>
+                            <td>{{menu.menuPrice}}</td>
+                            <td><img :src="menu.menuPhoto" width="100" alt=""></td>
+                            <td>{{menu.menuPhone}}</td>
+                            <td>
+                                <button class="btn btn-danger" @click="deleteMenu(menu.menuId)"><BIconTrash/></button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="row my-3">
+
             </div>
         </div>
     </div>
@@ -116,6 +119,7 @@
         },
         methods:{
             async uploadMenu(){
+                console.log("upload:"+this.profileId);
                 if(this.menuName !=="" && this.menuPhoto!=="" && this.menuPrice !== "" && this.menuPhone !==""){
                     this.loading = true;
                     this.error=false;
@@ -144,6 +148,9 @@
                 setTimeout(()=>{
                     this.error = false;
                 },5000)
+            },
+            deleteMenu(id){
+                this.$store.dispatch("deleteMenu", id);
             }
 
         }

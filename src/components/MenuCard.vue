@@ -9,7 +9,7 @@
                     <p><BIconCoin/> {{menu.menuPrice}} - MMK</p>
                     <a :href="'tel:'+menu.menuPhone" class="text-decoration-none text-warning"><BIconPhone/>09 - {{menu.menuPhone}}</a>
 <!--                    <p><BIconCalendar/> {{menu.menuDate.toDate().toLocaleTimeString('en-US',{ weekday:"short", year:"numeric", month:"short"})}}</p>-->
-                    <router-link class="btn btn-primary" :to="{name:'ShowMenu',params:{menuId: menu.menuId}}">View Details</router-link>
+<!--                    <router-link class="btn btn-secondary my-3" :to="{name:'ShowMenu',params:{menuId: menu.menuId}}">View Details</router-link>-->
                 </div>
             </div>
         </div>

@@ -12,9 +12,9 @@
                             <li class="nav-item">
                                 <router-link class="nav-link" :to="{name:'Home'}">Home</router-link>
                             </li>
-                            <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <router-link class="nav-link" :to="{name:'About'}">Menu</router-link>
-                            </li>
+                            </li>-->
                             <li class="nav-item">
                                 <router-link class="nav-link" :to="{name:'Login'}">Login/Register</router-link>
                             </li>
@@ -56,7 +56,7 @@
         methods:{
             signOut(){
                 firebase.auth().signOut();
-                window.location.reload();
+                this.$router.push({name:"Home"});
             }
         }
 
