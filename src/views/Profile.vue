@@ -2,10 +2,18 @@
     <div>
         <div class="container">
             <Modal v-if="modalActive" :modal-message="modalMessage" v-on:close-modal="closeModal"/>
-            <div class="row my-5">
+            <div class="row my-5 min-vh-100">
                 <div class="col-12 mx-auto col-md-6 col-lg-6">
                     <div class="card m-auto">
                         <div class="card-body">
+                            <div v-if="photo == null" class="my-2 text-center">
+                                <BIconPersonCircle/>
+                                <div class="d-flex justify-content-between">
+                                    <input type="file" class="form-control my-2">
+                                    <button class="btn btn-primary m-2">Upload</button>
+                                </div>
+                            </div>
+                            <img :src="photo" v-else class="rounded-circle" width="50" alt="">
                             <div class="d-flex flex-column">
                                 <span><BIconEnvelopeCheckFill/> Email:</span>
                                 <span class="fw-bold">{{email}}</span>
@@ -55,6 +63,14 @@
                 },
                 set(payload){
                     this.$store.commit("changeAddress", payload);
+                }
+            },
+            photo:{
+                get(){
+                    return this.$store.state.profilePhoto;
+                },
+                set(payload){
+                    this.$store.commit("changeProfile",payload);
                 }
             },
             email(){

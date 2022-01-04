@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
-import Register from "@/views/auth/Register";
-import Login from  "@/views/auth/Login";
+import Register from "../views/auth/Register";
+import Login from  "../views/auth/Login";
 import CreateContact from "../views/CreateContact";
 import ForgotPassword from "../views/auth/ForgotPassword";
 import Profile from "../views/Profile";
@@ -14,6 +14,10 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      title: "Home",
+      requiresAuth: false,
+    },
   },
 
   {
@@ -59,7 +63,7 @@ const routes = [
 ];
 
 const router = createRouter({
-
+  mode:'history',
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });

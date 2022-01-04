@@ -3,9 +3,10 @@
         <Loading v-show="loading"/>
         <div class="container min-vh-100">
             <div class="row my-3">
-                <h1>Admin Panel</h1>
-                <div class="col-12 col-md-4 col-lg- ">
-                    <div class="card">
+                <h1><BIconAdminSetting/>Admin Panel</h1>
+
+                <div class="col-12 col-md-4 col-lg-4  ">
+                    <div class="card mt-2">
                         <div class="card-header">Create new menu</div>
                         <div class="card-body text-start">
                             <div v-if="error" class="alert alert-warning" role="alert">
@@ -24,30 +25,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-8 col-lg-8">
-                    <table class="table border border-1 ">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Photo</th>
-                            <th>Phone</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="menu in getMenu" :key="menu.menuId">
-
-                            <td>{{menu.menuName}}</td>
-                            <td>{{menu.menuPrice}}</td>
-                            <td><img :src="menu.menuPhoto" width="100" alt=""></td>
-                            <td>{{menu.menuPhone}}</td>
-                            <td>
-                                <button class="btn btn-danger" @click="deleteMenu(menu.menuId)"><BIconTrash/></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="col-12 col-md-8 col-lg-8  mt-3 ">
+                    <div class="table-responsive">
+                        <table class="table border rounded table-hover">
+                            <thead>
+                            <tr class="text-center">
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Photo</th>
+                                <th>Phone</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(menu, index) in getMenu" class="align-middle text-center" :key="menu.menuId">
+                                <td>{{index+1}}</td>
+                                <td>{{menu.menuName}}</td>
+                                <td>{{menu.menuPrice}}</td>
+                                <td><img :src="menu.menuPhoto" width="50" class="rounded-circle" alt=""></td>
+                                <td>{{menu.menuPhone}}</td>
+                                <td>
+                                    <button class="btn btn-danger" @click="deleteMenu(menu.menuId)"><BIconTrash/></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="row my-3">
@@ -72,6 +76,8 @@
                 errorMsg:'',
             }
 
+        },
+        created() {
         },
         computed:{
             getMenu(){
@@ -134,13 +140,12 @@
                         ownerId:this.profileId,
                         date:timestamp
                     });
+                    this.$store.dispatch("getMenuItems");
                     this.menuName = "";
                     this.menuPhoto="";
                     this.menuPrice="";
                     this.menuPhone="";
                     this.loading=false;
-                    window.location.reload();
-                    // this.$router.push({name:"Home"});
                     return;
                 }
                 this.error = true;

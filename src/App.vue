@@ -1,7 +1,9 @@
 <template>
   <div class="container-fluid p-0">
     <Navigation v-if="!navigation"></Navigation>
-    <router-view/>
+
+    <router-view />
+
     <Foot v-if="!navigation"></Foot>
   </div>
 </template>
@@ -19,17 +21,19 @@
       };
     },
     created(){
+
       //updating user state initially by committing updateUser mutation
       firebase.auth().onAuthStateChanged((user)=>{
         this.$store.commit("updateUser", user);
         if(user){
           this.$store.dispatch("getCurrentUser")
+          this.$store.dispatch("getMenuItems");
         }
       })
 
       //checking route whether auth page or not.
       this.checkRoute();
-      this.$store.dispatch("getMenuItems")
+      // this.$store.dispatch("getMenuItems")
     },
 
 

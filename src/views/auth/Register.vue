@@ -64,6 +64,7 @@
                         name:this.name,
                         email:this.email,
                         address:null,
+                        photo:null,
                         date:timestamp
                     });
                     this.$router.push({name:"Home"});

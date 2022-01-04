@@ -62,6 +62,7 @@
                     this.errorMsg = err.message;
                 });
             },
+
             googleSignIn(){
                 const provider = new GoogleAuthProvider();
                 const auth = getAuth();
@@ -76,10 +77,10 @@
                             name:result.user.displayName,
                             email:result.user.email,
                             address:null,
+                            photo:null,
                             date:timestamp
                         });
                         this.$router.push({name:"Home"});
-                        window.loading.reload();
                         // ...
                     }).catch((error) => {
                     // Handle Errors here.

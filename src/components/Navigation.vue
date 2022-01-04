@@ -15,13 +15,12 @@
                             <!--<li class="nav-item">
                                 <router-link class="nav-link" :to="{name:'About'}">Menu</router-link>
                             </li>-->
-                            <li class="nav-item">
+                            <li class="nav-item" v-if="!user">
                                 <router-link class="nav-link" :to="{name:'Login'}">Login/Register</router-link>
                             </li>
-
                         </ul>
-                        <div class="dropdown " v-if="user">
-                            <button class="btn btn-secondary rounded dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="dropdown" v-if="user">
+                            <button class="btn btn-outline-light rounded dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{this.$store.state.profileName}}
                             </button>
                             <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
@@ -30,6 +29,7 @@
                                 <li><div class="dropdown-item" @click="signOut"><BIconBoxArrowRight/> Logout</div></li>
                             </ul>
                         </div>
+
 
                     </div>
                 </div>
@@ -57,6 +57,7 @@
             signOut(){
                 firebase.auth().signOut();
                 this.$router.push({name:"Home"});
+                window.location.reload();
             }
         }
 
