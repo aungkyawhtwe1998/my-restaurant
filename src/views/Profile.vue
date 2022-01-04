@@ -21,7 +21,7 @@
                             <hr>
                             <form action="">
                                 <div class="form-group">
-                                    <lable>Profile Photo</lable>
+                                    <label>Profile Photo</label>
                                     <input type="file" ref="profilePhoto" class="form-control my-2" accept=".png, .jpg, .jpeg">
                                 </div>
                                 <div class="form-group">

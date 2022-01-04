@@ -53,7 +53,7 @@
             signIn(){
                 firebase.auth().signInWithEmailAndPassword(this.email,this.password)
                     .then(()=>{
-                        this.$router.go('/home');
+                        this.$router.push({name:"Home"});
                         this.error = false;
                         this.errorMsg = "";
                     }).catch((err)=>{
@@ -68,14 +68,17 @@
                 signInWithPopup(auth, provider)
                     .then((result) => {
                         const dataBase = db.collection('users').doc(result.user.uid);
-                        dataBase.set({
-                            name:result.user.displayName,
-                            email:result.user.email,
-                            address:null,
-                            photo:null,
-                            date:timestamp
-                        });
-                        this.$router.push({name:"Home"});
+                        if(dataBase.id != result.user.uid){
+                            dataBase.set({
+                                id:dataBase.id,
+                                name:result.user.displayName,
+                                email:result.user.email,
+                                address:null,
+                                photo:null,
+                                date:timestamp
+                            });
+                        }
+
                         // ...
                     }).catch((error) => {
                     const errorCode = error.code;

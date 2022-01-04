@@ -38,8 +38,7 @@ export default createStore({
     },
 
     setProfileInfo(state, doc){
-      console.log("doc: "+doc);
-      state.profileId = doc.id;
+      state.profileId = doc.data().id;
       state.profileEmail = doc.data().email;
       state.profileName = doc.data().name;
       state.profilePhoto = doc.data().photo;
