@@ -102,6 +102,7 @@ export default createStore({
     },
 
     //user
+
     async getCurrentUser({commit}){
       const usersDB = await db.collection('users').doc(firebase.auth().currentUser.uid);
       const results = await usersDB.get();

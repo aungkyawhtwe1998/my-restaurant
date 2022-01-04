@@ -7,7 +7,7 @@
                     <div class="card m-auto">
                         <div class="card-body">
                             <div v-if="photo == null" class="my-2 text-center">
-                                <BIconPersonCircle/>
+                                <span class="fs-1"><BIconPersonCircle/></span>
                                 <div class="d-flex justify-content-between">
                                     <input type="file" class="form-control my-2">
                                     <button class="btn btn-primary m-2">Upload</button>

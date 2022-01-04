@@ -8,7 +8,8 @@ import Profile from "../views/Profile";
 import ShowMenu from "../views/ShowMenu";
 import About from "../views/About";
 import Admin from "../views/Admin";
-
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 const routes = [
   {
     path: "/",
@@ -18,6 +19,52 @@ const routes = [
       title: "Home",
       requiresAuth: false,
     },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta:{
+      title:"Login",
+      requiresAuth: false,
+    }
+
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+    meta: {
+      title:"Register",
+      requiresAuth: false,
+    }
+  },
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+    meta: {
+      title: "Forgot Password",
+      requiresAuth: false,
+    }
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+    meta: {
+      title:"Profile",
+      requiresAuth: true,
+    }
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: Admin,
+    meta: {
+      title: "Admin",
+      requiresAuth: true,
+    }
   },
 
   {
@@ -35,36 +82,32 @@ const routes = [
     name: "CreateContact",
     component: CreateContact
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register
-  },
-  {
-    path: "/forgot-password",
-    name: "ForgotPassword",
-    component: ForgotPassword
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: Profile
-  },
-  {
-    path: "/admin",
-    name: "Admin",
-    component: Admin
-  }
+
 ];
 
 const router = createRouter({
   mode:'history',
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
 });
+
+router.beforeEach((to,from,next)=>{
+  document.title = `${to.meta.title} | MyRestaurant`;
+  next();
+})
+
+router.beforeEach(async (to, from, next)=>{
+  let user = firebase.auth().currentUser;
+
+  if(to.matched.some((res)=> res.meta.requiresAuth)){
+    if(user){
+      return next();
+    }
+    return next({name: "Home"});
+  }
+    return next();
+})
 export default router;

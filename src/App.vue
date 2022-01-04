@@ -8,6 +8,7 @@
   </div>
 </template>
 <script>
+
   import Navigation from "./components/Navigation";
   import firebase from "firebase/compat/app";
   import "firebase/compat/auth";
@@ -21,12 +22,11 @@
       };
     },
     created(){
-
       //updating user state initially by committing updateUser mutation
       firebase.auth().onAuthStateChanged((user)=>{
         this.$store.commit("updateUser", user);
         if(user){
-          this.$store.dispatch("getCurrentUser")
+          this.$store.dispatch("getCurrentUser");
           this.$store.dispatch("getMenuItems");
         }
       })
@@ -35,7 +35,6 @@
       this.checkRoute();
       // this.$store.dispatch("getMenuItems")
     },
-
 
     methods:{
       //Checking route whether or not auth pages.

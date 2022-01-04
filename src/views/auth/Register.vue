@@ -3,9 +3,6 @@
         <div class="container min-vh-100">
             <div class="row">
                 <h1>Register</h1>
-                <font-awesome-icon :icon="['fab', 'font-awesome']"/>
-                <font-awesome-icon icon="coffee"></font-awesome-icon>
-
                 <div class="col-12 col-lg-6 mt-5 mx-auto">
                     <div class="card rounded shadow-sm">
                         <div class="card-body">
@@ -67,12 +64,12 @@
                         photo:null,
                         date:timestamp
                     });
-                    this.$router.push({name:"Home"});
-                    window.location.reload();
+                    this.$router.push({name:"Login"});
                     return;
                 }
                 this.error = true;
                 this.errorMsg = "Please fill out all the fields!"
+                return ;
             }
 
         }

@@ -3,7 +3,7 @@
         <Loading v-show="loading"/>
         <div class="container min-vh-100">
             <div class="row my-3">
-                <h1><BIconAdminSetting/>Admin Panel</h1>
+                <h1><BIconSliders/> Admin Panel</h1>
 
                 <div class="col-12 col-md-4 col-lg-4  ">
                     <div class="card mt-2">

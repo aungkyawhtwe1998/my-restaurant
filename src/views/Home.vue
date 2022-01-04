@@ -44,9 +44,6 @@
                 return this.$store.state.user;
             },
         },
-        created() {
-
-        }
     }
 </script>
 <style scoped>
