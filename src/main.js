@@ -13,6 +13,6 @@ import "firebase/compat/auth";
 let app;
 firebase.auth().onAuthStateChanged(()=>{
     if(!app){
-        createApp(App).use(store).use(router).use(BootstrapIconsPlugin).mount("#app");
+        createApp(App).use(router).use(store).use(BootstrapIconsPlugin).mount("#app");
     }
 })

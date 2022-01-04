@@ -33,14 +33,16 @@ export default createStore({
     updateUser(state, payload){
         state.user = payload
     },
-    filterMenuItems(state, payload) {
-      state.menuItems = state.menuItems.filter((menu) => menu.menuId !== payload);
+    createPhotoURL(state, payload){
+      state.profilePhoto = payload;
     },
+
     setProfileInfo(state, doc){
       console.log("doc: "+doc);
       state.profileId = doc.id;
       state.profileEmail = doc.data().email;
       state.profileName = doc.data().name;
+      state.profilePhoto = doc.data().photo;
       state.profileAddress = doc.data().address;
     },
     changeName(state, payload){
@@ -49,22 +51,23 @@ export default createStore({
     changeAddress(state, payload){
       state.profileAddress = payload
     },
-
     //Menu
     updateMenuName(state, payload){
       state.menuName = payload;
     },
+
     updateMenuPhoto(state, payload){
       state.menuPhoto = payload;
     },
+
     updateMenuPrice(state, payload){
       state.menuPrice = payload;
     },
     updateMenuPhone(state, payload){
       state.menuPhone = payload;
     },
-    filterBlogPost(state, payload) {
-      state.blogPosts = state.blogPosts.filter((menu) => menu.menuId !== payload);
+    filterMenuItems(state, payload) {
+      state.menuItems = state.menuItems.filter((menu) => menu.menuId !== payload);
     },
   },
   actions: {
@@ -97,7 +100,7 @@ export default createStore({
       commit("filterMenuItems", payload);
     },
     async updateMenu({ commit, dispatch }, payload) {
-      commit("filterBlogPost", payload);
+      commit("filterMenuItems", payload);
       await dispatch("getPost");
     },
 

@@ -140,12 +140,12 @@
                         ownerId:this.profileId,
                         date:timestamp
                     });
-                    this.$store.dispatch("getMenuItems");
                     this.menuName = "";
                     this.menuPhoto="";
                     this.menuPrice="";
                     this.menuPhone="";
                     this.loading=false;
+                    this.$store.dispatch("getMenuItems");
                     return;
                 }
                 this.error = true;
@@ -153,6 +153,7 @@
                 setTimeout(()=>{
                     this.error = false;
                 },5000)
+
             },
             deleteMenu(id){
                 this.$store.dispatch("deleteMenu", id);

@@ -1,12 +1,13 @@
 <template>
     <div>
         <div class="container min-vh-100">
+            <Loading v-show="loading"/>
             <div class="row">
                 <h1>Register</h1>
                 <div class="col-12 col-lg-6 mt-5 mx-auto">
                     <div class="card rounded shadow-sm">
                         <div class="card-body">
-                            <form>
+                            <form @submit.prevent="register">
 
                                 <input type="text" v-model="name" class="form-control mt-3 form-control-lg"  placeholder="Enter your name" >
 <!--                                <p class="bg-warning my-2 fw-bold rounded w-100" v-show="error">{{this.errorMsg}}</p>-->
@@ -20,7 +21,7 @@
                                     <span>Error:</span>{{this.errorMsg}}
                                 </div>
 <!--                                <p class="bg-warning my-2 fw-bold rounded w-100" v-show="error">{{this.errorMsg}}</p>-->
-                                <button @click.prevent="register" class="btn btn-primary mt-2" type="submit">Register</button>
+                                <button class="btn btn-primary mt-2" type="submit">Register</button>
                             </form>
                             <p class="mt-3"> Already have an account?</p>
                             <router-link class="nav-link" :to="{name:'Login'}">Login Here</router-link>
@@ -36,21 +37,28 @@
     import firebase from "firebase/compat/app";
     import db, {timestamp} from '../../config/firebaseInit';
     import "firebase/compat/auth";
+    import Loading from "../../components/Loading";
     export default {
         name:"Register",
+        components: {Loading},
         data(){
             return{
                 name:'',
                 email:'',
                 password:'',
                 error:null,
-                errorMsg:""
+                errorMsg:"",
+                loading:false,
             }
         },
         methods:{
-
             async register(){
-                if(this.name !== "" && this.email !=="" && this.address!=="" && this.password !== ""){
+                if(this.name !== "" &&
+                    this.email !=="" &&
+                    this.address!=="" &&
+                    this.password !== ""
+                ){
+                    this.loading=true;
                     this.error = false;
                     this.errorMsg="";
                     const firebaseAuth = await firebase.auth();
@@ -64,9 +72,11 @@
                         photo:null,
                         date:timestamp
                     });
-                    this.$router.push({name:"Login"});
+                    this.loading=false;
+                    await this.$router.push({name: "Home"});
                     return;
                 }
+                this.loading=false
                 this.error = true;
                 this.errorMsg = "Please fill out all the fields!"
                 return ;

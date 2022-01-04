@@ -53,7 +53,7 @@
             signIn(){
                 firebase.auth().signInWithEmailAndPassword(this.email,this.password)
                     .then(()=>{
-                        this.$router.push({name:"Home"});
+                        this.$router.go('/home');
                         this.error = false;
                         this.errorMsg = "";
                     }).catch((err)=>{
