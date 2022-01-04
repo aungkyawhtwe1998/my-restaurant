@@ -12,16 +12,23 @@
                             <div v-if="error" class="alert alert-warning" role="alert">
                                 <span>Error:</span>{{this.errorMsg}}
                             </div>
-
-                            <label>Name :</label>
-                            <input type="text" class="form-control" v-model="menuName" placeholder="Enter Recipe name" autocomplete="off">
-                            <label class="mt-2">Photo Url :</label>
-                            <input type="text" class="form-control mt-2" v-model="menuPhoto" placeholder="Enter photo link" autocomplete="off">
-                            <label  class="mt-2">Price :</label>
-                            <input type="text" class="form-control mt-2" v-model="menuPrice" placeholder="Enter price" autocomplete="off">
-                            <label  class="mt-2">Contact Number :</label>
-                            <input type="number" class="form-control mt-2" v-model="menuPhone" placeholder="Enter contact number" autocomplete="off">
-                            <button class="btn btn-primary mt-3" @click="uploadMenu">Save</button>
+                            <div class="form-group mb-1">
+                                <label>Name :</label>
+                                <input type="text" class="form-control" v-model="menuName" placeholder="Enter Recipe name" autocomplete="off">
+                            </div>
+                            <div class="form-group mb-1">
+                                <lable>Photo:</lable>
+                                <input type="file" ref="menuPhoto" class="form-control my-2" accept=".png, .jpg, .jpeg">
+                            </div>
+                            <div class="form-group mb-1">
+                                <label  class="mt-2">Price :</label>
+                                <input type="text" class="form-control mt-2" v-model="menuPrice" placeholder="Enter price" autocomplete="off">
+                            </div>
+                            <div class="form-group mb-1">
+                                <label  class="mt-2">Contact Number :</label>
+                                <input type="number" class="form-control mt-2" v-model="menuPhone" placeholder="Enter contact number" autocomplete="off">
+                            </div>
+                           <button class="btn btn-primary mt-3" @click="uploadMenu">Save</button>
                         </div>
                     </div>
                 </div>
@@ -64,6 +71,7 @@
     import db, {timestamp} from '../config/firebaseInit';
     import "firebase/compat/auth";
     import Loading from "../components/Loading";
+    import firebase from "firebase/compat";
     export default {
         name:'Admin',
         components:{
@@ -71,6 +79,7 @@
         },
         data(){
             return{
+                file:null,
                 loading:false,
                 error:false,
                 errorMsg:'',
@@ -110,14 +119,14 @@
                     this.$store.commit("updateMenuPrice",payload);
                 }
             },
-            menuPhoto:{
+            /*menuPhoto:{
                 get(){
                     return this.$store.state.menuPhoto
                 },
                 set(payload){
                     this.$store.commit("updateMenuPhoto",payload);
                 }
-            }
+            }*/
         },
         mounted() {
 
@@ -125,35 +134,45 @@
         },
         methods:{
             async uploadMenu(){
-                console.log("upload:"+this.profileId);
-                if(this.menuName !=="" && this.menuPhoto!=="" && this.menuPrice !== "" && this.menuPhone !==""){
+                this.file = this.$refs.menuPhoto.files[0];
+                this.$store.commit("updateMenuPhoto", URL.createObjectURL(this.file));
+                if(this.menuName !=="" && this.menuPhoto!=="" && this.menuPrice !== "" && this.menuPhone !=="") {
                     this.loading = true;
-                    this.error=false;
-                    this.errorMsg="";
-                    const menuDb = db.collection('menu').doc();
-                    await menuDb.set({
-                        id:menuDb.id,
-                        name:this.menuName,
-                        photo:this.menuPhoto,
-                        price:this.menuPrice,
-                        phone:this.menuPhone,
-                        ownerId:this.profileId,
-                        date:timestamp
-                    });
-                    this.menuName = "";
-                    this.menuPhoto="";
-                    this.menuPrice="";
-                    this.menuPhone="";
-                    this.loading=false;
-                    this.$store.dispatch("getMenuItems");
-                    return;
+                    this.error = false;
+                    this.errorMsg = "";
+                    const storageRef = firebase.storage().ref();
+                    const docReference = storageRef.child(`document/menuPhoto/${this.file.name}`);
+                    docReference.put(this.file).on("state_changed",(snapshot) => {
+                        console.log(snapshot)
+                    },(err)=>{
+                            console.log(err.message);
+                        }, async ()=>{
+                            const downloadUrl =await docReference.getDownloadURL();
+                            this.$store.commit("updateMenuPhoto", downloadUrl);
+                            const menuDb = db.collection('menu').doc();
+                            await menuDb.set({
+                                id:menuDb.id,
+                                name:this.menuName,
+                                photo:downloadUrl,
+                                price:this.menuPrice,
+                                phone:this.menuPhone,
+                                ownerId:this.profileId,
+                                date:timestamp
+                            });
+                            this.menuName = "";
+                            this.menuPhoto="";
+                            this.menuPrice="";
+                            this.menuPhone="";
+                            this.loading=false;
+                            this.$store.dispatch("getMenuItems");
+                            return;
+                        });
                 }
                 this.error = true;
                 this.errorMsg ="Please fill all the fields!";
                 setTimeout(()=>{
                     this.error = false;
                 },5000)
-
             },
             deleteMenu(id){
                 this.$store.dispatch("deleteMenu", id);
