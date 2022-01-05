@@ -1,7 +1,7 @@
 <template>
     <div class="modal">
-        <div class="card w-25 h-25 rounded shadow-lg">
-            <div class="card-body">
+        <div class="card rounded shadow-lg">
+            <div class="card-body text-center">
                 <p>{{this.modalMessage}}</p>
                 <button @click="closeModal" class="btn btn-dark">Close</button>
             </div>

@@ -12,12 +12,10 @@
                             <li class="nav-item">
                                 <router-link class="nav-link" :to="{name:'Home'}">Home</router-link>
                             </li>
-                            <!--<li class="nav-item">
+                            <li class="nav-item">
                                 <router-link class="nav-link" :to="{name:'About'}">Menu</router-link>
-                            </li>-->
-                            <li class="nav-item" v-if="!user">
-                                <router-link class="nav-link" :to="{name:'Login'}">Login/Register</router-link>
                             </li>
+
                         </ul>
                         <div class="dropdown" v-if="user">
                             <button class="btn btn-outline-light rounded dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -25,7 +23,7 @@
                             </button>
                             <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
                                 <li><router-link class="dropdown-item" :to="{name:'Profile'}"><BIconPersonCircle/> Profile</router-link></li>
-                                <li><router-link class="dropdown-item" :to="{name:'Admin'}"><BIconSliders/> Admin Panel</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'Admin'}" v-show="this.$store.state.profileIsOwner"><BIconSliders/> Owner Panel</router-link></li>
                                 <li><div class="dropdown-item" @click="signOut"><BIconBoxArrowRight/> Logout</div></li>
                             </ul>
                         </div>

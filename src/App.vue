@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-0" v-if="this.$store.state.menuItemsLoaded && this.$store.state.userLoaded">
     <Navigation v-if="!navigation"></Navigation>
 
     <router-view />
@@ -15,9 +15,10 @@
   import Foot from "./components/Foot";
   export default {
     name:'app',
-    components:{Foot, Navigation},
+    components:{ Foot, Navigation},
     data(){
       return{
+        loading:false,
         navigation:null
       };
     },
@@ -27,13 +28,14 @@
         this.$store.commit("updateUser", user);
         if(user){
           this.$store.dispatch("getCurrentUser");
-          this.$store.dispatch("getMenuItems");
+          this.$store.dispatch("getOwnerMenu");
         }
-      })
+      });
+      this.$store.dispatch("getMenuItems");
+      this.$store.dispatch("getUsers");
 
       //checking route whether auth page or not.
       this.checkRoute();
-      // this.$store.dispatch("getMenuItems")
     },
 
     methods:{

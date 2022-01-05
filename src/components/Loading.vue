@@ -1,6 +1,8 @@
 <template>
     <div class="loading">
-        <span></span>
+        <div class="card bg-white p-4">
+            <span></span>
+        </div>
     </div>
 </template>
 
@@ -16,7 +18,7 @@
         z-index: 1000;
         height: 100%;
         width: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.1);
         position: fixed;
         display: flex;
         justify-content: center;

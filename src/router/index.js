@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
-import Register from "../views/auth/Register";
-import Login from  "../views/auth/Login";
 import CreateContact from "../views/CreateContact";
 import ForgotPassword from "../views/auth/ForgotPassword";
 import Profile from "../views/Profile";
@@ -20,25 +18,7 @@ const routes = [
       requiresAuth: false,
     },
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-    meta:{
-      title:"Login",
-      requiresAuth: false,
-    }
 
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register,
-    meta: {
-      title:"Register",
-      requiresAuth: false,
-    }
-  },
   {
     path: "/forgot-password",
     name: "ForgotPassword",
@@ -75,7 +55,12 @@ const routes = [
   {
     path: "/menu/:menuId",
     name:"ShowMenu",
-    component: ShowMenu
+    props:true,
+    component: ShowMenu,
+    meta: {
+      title: "ShowMenu",
+      requiresAuth: false,
+    }
   },
   {
     path: "/contact",
@@ -86,7 +71,6 @@ const routes = [
 ];
 
 const router = createRouter({
-  mode:'history',
   history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior() {
@@ -109,5 +93,7 @@ router.beforeEach(async (to, from, next)=>{
     return next({name: "Home"});
   }
     return next();
-})
+});
+
+
 export default router;
