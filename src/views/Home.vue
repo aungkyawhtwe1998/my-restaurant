@@ -9,7 +9,7 @@
                 <div class="col-12 col-md-6 col-lg-6 text-lg-start text-md-start text-center">
                     <h1>Welcome {{profileName}}</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi consectetur earum est, illo impedit nulla perspiciatis qui quo quos rem sed ullam vero?</p>
-                    <button class="btn btn-dark" @click.prevent="showLogin" v-show="!this.$store.state.user">Signin Here</button>
+                    <button class="btn btn-dark" @click.prevent="showLogin" v-show="!this.$store.state.user">Login to Access Owner Panel</button>
                 </div>
             </div>
             <div class="row my-3 justify-content-center align-items-center" v-if="this.$store.state.menuItemsLoaded">

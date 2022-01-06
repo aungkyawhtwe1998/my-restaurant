@@ -95,7 +95,7 @@
                             email:result.user.email,
                             address:null,
                             photo:null,
-                            owner:false,
+                            owner:true,
                             date:timestamp
                         });
                         window.location.reload();
@@ -130,7 +130,7 @@
                         email:this.email,
                         address:null,
                         photo:null,
-                        owner:false,
+                        owner:true,
                         date:timestamp
                     }).then(()=>{
                         this.closeModal();

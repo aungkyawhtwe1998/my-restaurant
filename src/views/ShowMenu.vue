@@ -10,7 +10,7 @@
                             <img :src="this.currentMenu[0].menuPhoto" width="300" class="rounded" alt="">
                             <div class="bg-choco text-white m-1 rounded p-1">
                                 <p><BIconTags/> {{this.currentMenu[0].menuPrice}}</p>
-                                <a class="text-decoration-none text-warning" href="tel:{{this.currentMenu[0].menuPhone}}"><BIconTelephone/> {{this.currentMenu[0].menuPhone}}</a>
+                                <a class="text-decoration-none text-warning" :href="'tel:'+this.currentMenu[0].menuPhone"><BIconTelephone/> {{this.currentMenu[0].menuPhone}}</a>
 
                             </div>
                             </div>
