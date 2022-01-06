@@ -212,9 +212,11 @@
                             this.loading = false;
                         },(err)=>{
                             this.loading=false;
-                            this.error =false;
+                            this.error =true;
                             this.errorMsg = err.message;
-                            console.log(err.message);
+                            setTimeout(()=>{
+                                this.error = false;
+                            },5000)
                         }, async ()=>{
                             this.loading = true;
                             const downloadUrl =await docReference.getDownloadURL();
@@ -228,16 +230,27 @@
                                 phone:this.menuPhone,
                                 ownerId:this.profileId,
                                 date:timestamp
+                            }).then(()=>{
+                                this.error = false;
+                                this.errorMsg = "";
+                                this.menuName = "";
+                                this.menuPhoto="";
+                                this.menuPrice="";
+                                this.menuPhone="";
+                                this.loading = false;
+                                this.error=false;
+                                this.errorMsg="";
+                                this.$store.dispatch("getOwnerMenu");
+                                this.$store.dispatch("getMenuItems");
+                            }).catch(error=>{
+                                this.loading = false;
+                                this.error=true;
+                                this.errorMsg=error.message;
+                                setTimeout(()=>{
+                                    this.error = false;
+                                },5000)
                             });
-                            this.menuName = "";
-                            this.menuPhoto="";
-                            this.menuPrice="";
-                            this.menuPhone="";
-                            this.loading = false;
-                            this.error=false;
-                            this.errorMsg="";
-                            this.$store.dispatch("getOwnerMenu");
-                            this.$store.dispatch("getMenuItems");
+
                         });
                         this.loading = false;
                         this.error=false;

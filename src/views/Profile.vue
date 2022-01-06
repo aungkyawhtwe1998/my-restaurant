@@ -101,7 +101,7 @@
         methods:{
             uploadProfilePhoto(){
                 this.file = this.$refs.profilePhoto.files[0];
-                if(this.file!==null){
+                if(this.file){
                     this.modalMessage="";
                     this.modalActive=false;
                     this.$store.commit("createPhotoURL", URL.createObjectURL(this.file));
@@ -130,8 +130,11 @@
                         });
                     this.modalActive = false;
                 }
-                this.modalMessage = "Select picture!"
-                this.modalActive = true;
+                else {
+                    this.modalMessage = "Select picture!"
+                    this.modalActive = true;
+                }
+
 
             },
             updateProfile() {

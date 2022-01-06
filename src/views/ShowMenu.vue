@@ -24,7 +24,7 @@
                             <img :src="this.currentShop[0].profilePhoto" v-if="this.currentShop[0].profilePhoto !== null" class="rounded" width="300" alt="">
                             <div class="bg-choco text-white rounded m-1 p-1">
                                 <p v-if="this.currentShop[0].profileAddress!==null">{{this.currentShop[0].profileAddress}}</p>
-                                <p>{{this.currentShop[0].profileId}}</p>
+                                <p>{{this.currentShop[0].profileEmail}}</p>
                             </div>
                         </div>
                     </div>
